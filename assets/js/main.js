@@ -3,7 +3,7 @@ let categoriaActiva = 'comida';
 let carrito = {};
 let tipoEntregaSeleccionado = ''; // Almacena 'domicilio' o 'local'
 
-// SOLUCCIÓN COMANDE EN TIEMPO REAL: Agregamos ?v= + Date.now() para romper la caché del navegador
+// SOLUCIÓN CACHÉ: Forzar lectura en tiempo real del JSON
 document.addEventListener('DOMContentLoaded', () => {
   fetch('data/web_info.json?v=' + Date.now())
     .then(response => {
@@ -32,6 +32,21 @@ function inicializarInterfaz() {
   document.querySelector('.header-overlay').style.backgroundColor = hexToRgba(config.color_principal, 0.35);
   document.querySelector('.barra-compra').style.backgroundColor = config.color_principal;
 
+  // INYECCIÓN DINÁMICA DE ANCHO, COLOR Y TEXTOS DEL DELINEADO
+  const contenedorUbicacion = document.querySelector('.Ubicacion-contenedor');
+  if (contenedorUbicacion) {
+    contenedorUbicacion.style.borderWidth = config.grosor_borde || '2px';
+    contenedorUbicacion.style.borderColor = config.color_borde || '#ffffff';
+    contenedorUbicacion.style.color = config.color_texto_encabezado || '#ffffff';
+    
+    const labelsUbicacion = contenedorUbicacion.querySelectorAll('label');
+    labelsUbicacion.forEach(lbl => lbl.style.color = config.color_texto_encabezado || '#ffffff');
+  }
+
+  // Cambia el color de los textos principales de la marca
+  document.getElementById('tienda-nombre').style.color = config.color_texto_encabezado || '#ffffff';
+  document.getElementById('tienda-eslogan').style.color = config.color_texto_encabezado || '#ffffff';
+
   renderizarCategorias();
   renderizarPlatillos();
 
@@ -45,7 +60,6 @@ function hexToRgba(hex, alpha) {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-// Controla de forma excluyente qué campo de ubicación se muestra en el encabezado
 function alternarDestinoEntrega(valor) {
   tipoEntregaSeleccionado = valor;
   const campoDomicilio = document.getElementById('campo-domicilio');
@@ -54,11 +68,11 @@ function alternarDestinoEntrega(valor) {
   if (valor === 'domicilio') {
     campoDomicilio.style.display = 'block';
     campoLocal.style.display = 'none';
-    document.getElementById('input-mesa').value = ''; // Limpia el otro campo
+    document.getElementById('input-mesa').value = ''; 
   } else if (valor === 'local') {
     campoDomicilio.style.display = 'none';
     campoLocal.style.display = 'block';
-    document.getElementById('input-direccion').value = ''; // Limpia el otro campo
+    document.getElementById('input-direccion').value = ''; 
   }
 }
 
@@ -80,7 +94,6 @@ function cambiarCategoria(idCategoria) {
   renderizarCategorias();
   renderizarPlatillos();
 }
-
 function renderizarPlatillos() {
   const contenedorGrid = document.getElementById('contenedor-platillos');
   contenedorGrid.innerHTML = '';
@@ -90,7 +103,7 @@ function renderizarPlatillos() {
       <div class="platillo-card" style="flex-direction: column; align-items: flex-start; width: 100%;">
         <h3 style="margin-bottom: 8px;">📝 Sugerencias o Notas del Pedido</h3>
         <p style="font-size: 0.9rem; color: #666; margin-bottom: 12px;">Escribe aquí cualquier indicación general para el repartidor:</p>
-        <textarea id="nota-general" placeholder="Ej: Llevar cambio de $20.000, tocar el timbre fuerte..." style="width: 100%; height: 100px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; resize: none;"></textarea>
+        <textarea id="nota-general" placeholder="Ej: Llevar cambio de $20.000, tocar el timbre fuerte..." style="width: 100%; height: 100px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; resize: none; font-size: 0.9rem; width: 100%;"></textarea>
       </div>
     `;
     return;
@@ -113,7 +126,6 @@ function renderizarPlatillos() {
         <img src="${prod.imagen}" alt="${prod.titulo}" class="platillo-img" onerror="this.src='https://picsum.photos'">
         <div class="platillo-info" style="display: flex; flex-direction: column;">
           <h3 style="margin: 0;">${prod.titulo}</h3>
-          <!-- Enlace interactivo para desplegar ventana flotante de ingredientes -->
           <button class="btn-ver-ingredientes" onclick="abrirModalIngredientes(${prod.id})">📋 Ver ingredientes</button>
           <p class="platillo-precio" style="margin: 4px 0 6px 0;">$${prod.precio.toLocaleString()}</p>
           <div class="platillo-meta">
@@ -126,7 +138,7 @@ function renderizarPlatillos() {
       
       <div id="wrapper-nota-${prod.id}" style="display: ${yaElegido ? 'block' : 'none'}; margin-top: 12px;">
         <textarea id="nota-prod-${prod.id}" placeholder="¿Alguna modificación? (Ej: Sin cebolla, salsa extra...)" 
-          style="width: 100%; height: 45px; padding: 8px; border-radius: 6px; border: 1px solid #ccc; resize: none; font-size: 0.85rem;"
+          style="width: 100%; height: 45px; padding: 8px; border-radius: 6px; border: 1px solid #ccc; resize: none; font-size: 0.85rem; width: 100%;"
           onchange="actualizarNotaProducto(${prod.id})">${notaTexto}</textarea>
       </div>
     `;
@@ -134,7 +146,6 @@ function renderizarPlatillos() {
   });
 }
 
-// Funciones para el control de la Ventana Flotante de Ingredientes en el Cliente
 function abrirModalIngredientes(id) {
   const prod = datosTienda.platillos.find(p => p.id === id);
   if (prod) {
@@ -203,48 +214,57 @@ function enviarComandaWhatsApp() {
       alert('Por favor, escribe tu dirección de entrega.');
       return;
     }
-    infoUbicacion = dir;
+    infoUbicacion = "🛵 Domicilio -> " + dir;
   } else if (tipoEntregaSeleccionado === 'local') {
     const mesa = document.getElementById('input-mesa').value.trim();
     if (!mesa) {
-      alert('Por favor, escribe el número de mesa.');
+      alert('Por favor, escribe tu número de mesa.');
       return;
     }
-    infoUbicacion = "Mesa " + mesa;
+    infoUbicacion = "🪑 En el Local -> Mesa " + mesa;
   }
 
-  // Generar código único aleatorio de 8 dígitos
-  const codigoOrden = Math.floor(10000000 + Math.random() * 90000000);
-  
   if (Object.keys(carrito).length === 0) {
-    alert('El carrito está vacío. Agrega al menos un producto.');
+    alert('El carrito está vacío. Selecciona al menos un platillo.');
     return;
   }
 
-  // Estructurar comanda limpia para WhatsApp con negritas y viñetas
-  let textoComanda = `🛍️ *NUEVA ORDEN (#${codigoOrden})*\n`;
-  textoComanda += `📍 *Ubicación:* ${infoUbicacion}\n\n`;
-  textoComanda += `📋 *Detalle del Pedido:*\n`;
+  const codigoOrden = Math.floor(10000000 + Math.random() * 90000000);
+  
+  let mensaje = `🔔 *NUEVO PEDIDO RECIBIDO (#${codigoOrden})*\n`;
+  mensaje += `------------------------------------------\n`;
+  mensaje += `📍 *Tipo de Entrega:* ${infoUbicacion}\n`;
+  mensaje += `------------------------------------------\n\n`;
+  mensaje += `🛒 *Detalle del Pedido:*\n`;
 
+  let totalComanda = 0;
   Object.values(carrito).forEach(item => {
-    textoComanda += `• ${item.cantidad}x ${item.titulo} ($${(item.precio * item.cantidad).toLocaleString()})\n`;
+    const subtotal = item.precio * item.cantidad;
+    totalComanda += subtotal;
+    mensaje += `• *(${item.cantidad}x)* ${item.titulo} -> _$${subtotal.toLocaleString()}_\n`;
     if (item.notaEspecifica && item.notaEspecifica.trim() !== '') {
-      textoComanda += `  └ _Nota: ${item.notaEspecifica.trim()}_\n`;
+      mensaje += `   └ _Nota: ${item.notaEspecifica.trim()}_\n`;
     }
   });
 
-  const notaGen = document.getElementById('nota-general');
-  if (notaGen && notaGen.value.trim() !== '') {
-    textoComanda += `\n📝 *Notas Generales:* ${notaGen.value.trim()}\n`;
+  const notaGeneralInput = document.getElementById('nota-general');
+  if (notaGeneralInput && notaGeneralInput.value.trim() !== '') {
+    mensaje += `\n📝 *Notas Generales del Repartidor:*\n_${notaGeneralInput.value.trim()}_\n`;
   }
 
-  let totalAcumulado = 0;
-  Object.values(carrito).forEach(item => { totalAcumulado += item.precio * item.cantidad; });
-  
-  textoComanda += `\n💰 *Total a Pagar:* $${totalAcumulado.toLocaleString()}`;
+  mensaje += `\n------------------------------------------\n`;
+  mensaje += `💰 *TOTAL A PAGAR:* $${totalComanda.toLocaleString()}\n`;
+  mensaje += `------------------------------------------\n\n`;
+  mensaje += `¡Muchas gracias por elegirnos! Tu orden está siendo procesada. 🍳`;
 
-  const numDestino = datosTienda.configuracion.whatsapp_destino;
-  const urlWhatsApp = `https://wa.me{numDestino}?text=${encodeURIComponent(textoComanda)}`;
+  // VALIDACIÓN DE SEGURIDAD CONTRA RESIDUOS DE LLAVES
+  let whatsappDestino = datosTienda.configuracion && datosTienda.configuracion.whatsapp_destino 
+                        ? datosTienda.configuracion.whatsapp_destino 
+                        : "573219163532";
+
+  whatsappDestino = whatsappDestino.replace(/[{}]/g, '');
+
+  const urlFinal = `https://wa.me{whatsappDestino}?text=${encodeURIComponent(mensaje)}`;
   
-  window.open(urlWhatsApp, '_blank');
+  window.open(urlFinal, '_blank');
 }
