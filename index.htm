@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arepas tal tal - Menú Digital</title>
+  <link rel="stylesheet" href="assets/css/estilos.css">
+</head>
+<body>
+
+  <!-- Encabezado Principal con Estructura Flexbox Unificada -->
+  <header class="header-negocio" id="header-bg">
+    <div class="header-overlay">
+      <div class="header-contenido">
+        
+        <!-- BLOQUE UNIFICADO DE IDENTIDAD (Logo y Letras Juntos) -->
+        <div class="marca-bloque">
+          <div class="avatar-contenedor">
+            <img src="images/logo.jpg" alt="Logo" id="tienda-logo" class="logo-avatar">
+          </div>
+          <div class="texto-negocio">
+            <h1 id="tienda-nombre">Cargando...</h1>
+            <p id="tienda-eslogan">...</p>
+          </div>
+        </div>
+        
+        <!-- SELECTORES DINÁMICOS DE UBICACIÓN -->
+        <div class="Ubicacion-contenedor" style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; max-width: 320px; flex-shrink: 0;">
+          <label style="font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 5px;">📍 ¿Dónde estás ubicado?</label>
+          <div style="display: flex; gap: 10px; margin-bottom: 8px;">
+            <label style="font-size: 0.9rem; cursor: pointer;"><input type="radio" name="tipo_entrega" value="domicilio" onchange="alternarDestinoEntrega(this.value)"> Domicilio</label>
+            <label style="font-size: 0.9rem; cursor: pointer;"><input type="radio" name="tipo_entrega" value="local" onchange="alternarDestinoEntrega(this.value)"> En el Local</label>
+          </div>
+          
+          <!-- Campo dinámico para Domicilio -->
+          <div id="campo-domicilio" style="display: none;">
+            <input type="text" id="input-direccion" placeholder="Escribe tu dirección de entrega..." style="width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #fff; font-size: 0.85rem; color: #333; outline: none;">
+          </div>
+          
+          <!-- Campo dinámico para Mesa del Local -->
+          <div id="campo-local" style="display: none;">
+            <input type="number" id="input-mesa" min="1" placeholder="Número de mesa..." style="width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #fff; font-size: 0.85rem; color: #333; outline: none;">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Barra Navegación de Categorías (Pestañas) -->
+  <nav class="categorias-nav" id="contenedor-categorias">
+    <!-- Se inyectarán dinámicamente con JS -->
+  </nav>
+
+  <!-- Contenedor Principal del Menú -->
+  <main class="menu-contenedor">
+    <h2 class="seccion-titulo">Nuestro Menú</h2>
+    
+    <!-- Lista de Platillos Superpuestos -->
+    <div class="platillos-grid" id="contenedor-platillos">
+      <!-- Se inyectarán dinámicamente con JS -->
+    </div>
+  </main>
+
+  <!-- BARRA DE COMPRA FIJA INFERIOR -->
+  <footer class="barra-compra">
+    <div class="barra-compra-contenedor">
+      <div class="pedido-total">
+        Pedido Actual: <span id="total-precio">$0</span>
+      </div>
+      <button class="btn-hacer-pedido" id="btn-ordenar">
+        🛍️ Hacer Pedido
+      </button>
+    </div>
+  </footer>
+
+  <!-- VENTANA FLOTANTE DE INGREDIENTES (NUEVO MODAL) -->
+  <div class="modal-overlay" id="modalIngredientes" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;">
+    <div class="modal-ventana" style="background: white; width: 90%; max-width: 400px; border-radius: 12px; padding: 20px; color: #333;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 15px;">
+        <h3 id="modal-ingredientes-titulo" style="margin: 0; font-size: 1.2rem;">🍔 Ingredientes</h3>
+        <span style="font-size: 1.5rem; font-weight: 700; color: #aaa; cursor: pointer;" onclick="cerrarModalIngredientes()">&times;</span>
+      </div>
+      <p id="modal-ingredientes-cuerpo" style="font-size: 0.95rem; line-height: 1.5; color: #555;"></p>
+    </div>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

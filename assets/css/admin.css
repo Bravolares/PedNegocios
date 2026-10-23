@@ -1,0 +1,219 @@
+/* --- CINTILLA SUPERIOR INFORMATIVA --- */
+.cintilla-admin {
+  background-color: #1a1a1a;
+  color: #ffca28;
+  text-align: center;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* --- BOTONES PRINCIPALES DE ACCIÓN --- */
+.btn-crear {
+  background-color: #00c853;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-crear:hover {
+  background-color: #00b248;
+}
+
+/* --- LISTADO DE ARTÍCULOS EN EL PANEL --- */
+.admin-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.admin-item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  border: 1px solid #eef2f5;
+}
+
+.admin-item-info {
+  flex: 1;
+}
+
+.admin-desc {
+  font-size: 0.9rem;
+  color: #777;
+  margin: 6px 0 15px 0;
+  line-height: 1.4;
+}
+
+.admin-acciones {
+  display: flex;
+  gap: 10px;
+}
+
+/* BOTONES INTERNOS DE LA TARJETA */
+.btn-modificar {
+  background-color: #ff9100;
+  color: white;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.btn-modificar:hover {
+  background-color: #e68200;
+}
+
+.btn-borrar {
+  background-color: #ff1744;
+  color: white;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.btn-borrar:hover {
+  background-color: #d50000;
+}
+
+/* --- VENTANA FLOTANTE (MODAL CON EFECTO BLUR/DIFUMINADO) --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px); /* Genera el efecto borroso en el fondo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Clase activadora mediante JavaScript */
+.modal-overlay.mostrar {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-ventana {
+  background: white;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  transform: translateY(-20px);
+  transition: transform 0.3s ease;
+}
+
+.modal-overlay.mostrar .modal-ventana {
+  transform: translateY(0);
+}
+
+.modal-cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.modal-cerrar {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.modal-cerrar:hover {
+  color: #333;
+}
+
+/* --- ELEMENTOS DE FORMULARIO DENTRO DEL MODAL --- */
+.form-grupo {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-grupo label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.form-grupo input, 
+.form-grupo select, 
+.form-grupo textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.form-grupo input:focus, 
+.form-grupo select:focus, 
+.form-grupo textarea:focus {
+  border-color: #7B1FA2; /* Color morado de tu marca al enfocar */
+}
+
+.btn-guardar-modal {
+  width: 100%;
+  background-color: #2e3d52;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s;
+}
+
+.btn-guardar-modal:hover {
+  background-color: #1e2936;
+}
+
+/* Añade esto al final de assets/css/admin.css */
+.btn-interactivo-inline {
+  background-color: #ff9100; /* Color anaranjado predeterminado */
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.btn-interactivo-inline:hover {
+  background-color: #e68200;
+}

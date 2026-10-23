@@ -1,0 +1,53 @@
+{
+    "configuracion": {
+        "nombre_tienda": "Arepas tal tal",
+        "eslogan": "¡Tu comida favorita calentita y directo a tu puerta!",
+        "whatsapp_destino": "573219163532",
+        "color_principal": "#7B1FA2",
+        "opacidad": "0.50",
+        "color_borde": "#FFCA28",
+        "grosor_borde": "2px",
+        "color_texto_encabezado": "#FFFFFF"
+    },
+
+    "categorias": [
+        {
+            "id": "comida",
+            "nombre": "Comida"
+        },
+        {
+            "id": "notas",
+            "nombre": "Notas Especiales"
+        },
+        {
+            "id": "bebida",
+            "nombre": "Bebida"
+        }
+    ],
+    "platillos": [
+        {
+            "id": 1,
+            "titulo": "Hamburguesa de Pezcado chipichipi",
+            "precio": 4000,
+            "categoria": "comida",
+            "descripcion": "culos",
+            "imagen": "images/plato_1792731689_508.jpg"
+        },
+        {
+            "id": 2,
+            "titulo": "Full calidad Refresco",
+            "precio": 30001,
+            "categoria": "bebida",
+            "descripcion": "Bebida refrescante de 350ml.",
+            "imagen": "images/plato_1792731749_944.jpg"
+        },
+        {
+            "id": 1792738546,
+            "titulo": "Tetero de Manzana",
+            "precio": 25000,
+            "categoria": "comida",
+            "descripcion": "Descripcion de prueba",
+            "imagen": "images/plato_1792738534_519.webp"
+        }
+    ]
+}

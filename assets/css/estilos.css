@@ -1,0 +1,301 @@
+/* --- RESETEO GENERAL Y VARIABLES --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  background-color: #f7f9fc;
+  color: #333;
+  padding-bottom: 80px; /* Espacio para que la barra inferior no tape contenido */
+}
+
+/* --- ENCABEZADO CON IMAGEN DE FONDO SUPERPUESTA --- */
+.header-negocio {
+  height: 220px;
+  background-image: url('/Pedidos/images/fondo_default.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+/* DISTRIBUCIÓN HORIZONTAL MAESTRA: Marca a la izquierda, Ubicación a la derecha */
+.header-contenido {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+  color: #fff;
+}
+
+/* Alinea el logo redondo y los textos uno al lado del otro de forma compacta */
+.marca-bloque {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Mantiene el título arriba y la descripción abajo en su propia columna */
+.texto-negocio {
+  display: flex;
+  flex-direction: column;
+  max-width: 450px; /* Previene desbordes si la descripción es muy larga */
+}
+
+.logo-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  object-fit: cover;
+  margin-bottom: 0px; /* Centrado vertical perfecto */
+  flex-shrink: 0;     /* Protege la circunferencia del logo en móviles */
+}
+
+.header-contenido h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.header-contenido p {
+  font-family: 'Arial', sans-serif;
+/* Espaciado entre letras */
+    letter-spacing: 2px;
+/* Espaciado entre líneas */
+    line-height: 1.5;
+font-size: 10px;
+  opacity: 10;
+  margin: 0;
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* --- PESTAÑAS DE CATEGORÍAS --- */
+.categorias-nav {
+  display: flex;
+  gap: 10px;
+  padding: 15px;
+  background: #fff;
+  overflow-x: auto;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.btn-categoria {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.btn-categoria.activo {
+  background: #7B1FA2;
+  color: #fff;
+  border-color: #7B1FA2;
+}
+
+/* --- CONTENEDOR DE PLATILLOS --- */
+.menu-contenedor {
+  padding: 20px;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.seccion-titulo {
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  color: #444;
+}
+
+.platillos-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
+.platillo-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid #eef2f5;
+  position: relative;
+}
+
+.platillo-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.platillo-info {
+  flex: 1;
+}
+
+.platillo-info h3 {
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.platillo-precio {
+  color: #d32f2f;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+}
+
+.platillo-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.platillo-meta input {
+  width: 50px;
+  padding: 4px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.platillo-check {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+
+/* --- BARRA FIJA INFERIOR --- */
+.barra-compra {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #3f51b5;
+  color: #fff;
+  padding: 15px 20px;
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.15);
+  z-index: 100;
+}
+
+.barra-compra-contenedor {
+  max-width: 1024px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pedido-total {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.btn-hacer-pedido {
+  background: #00e676;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-hacer-pedido:active {
+  transform: scale(0.95);
+}
+
+/* --- MEDIAS QUERIES --- */
+@media (min-width: 600px) {
+  .platillos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .platillos-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .header-negocio {
+    height: 260px;
+  }
+}
+
+/* --- MODALES --- */
+.modal-overlay.mostrar-modal {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.btn-ver-ingredientes {
+  background: none;
+  border: none;
+  color: #7B1FA2;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 4px;
+  text-align: left;
+}
+/* ==========================================================================
+   PERSONALIZACIÓN DE COLORES DEL ENCABEZADO
+   ========================================================================== */
+
+/* 1. COLOR DEL TEXTO DEL NEGOCIO */
+.header-contenido h1 {
+  color: #ffffff !important; /* Color del título (Cambia aquí si no lo quieres blanco) */
+ /* Sombra del texto */
+    text-shadow: 2px 0.2px 4px rgba(0,0,0,0.5);
+-webkit-text-stroke: 0.2px black; /* Grosor y color del contorno */
+}
+
+.header-contenido p {
+   /* Sombra del texto */
+    text-shadow: 1px 1px 1px  #ffffff;
+color: #000000 !important; /* Color de la descripción / eslogan */
+/* Grosor de la fuente */
+    font-weight: bold; /* También puede ser 100, 200...900 */
+ -webkit-text-stroke-width: 0.2px; /* Grosor del delineado */
+    -webkit-text-stroke-color: #000000; /* Color del delineado */
+}
+
+
+/* 2. COLOR DE LA CAJA DE UBICACIÓN */
+.Ubicacion-contenedor {
+  /* Puedes cambiar el color de fondo. El valor actual es blanco con 20% de opacidad */
+  background: rgba(227, 155, 143, 0.20) !important; 
+  
+  /* Color de las letras dentro de la caja de ubicación */
+  color: #FFFFFF !important; 
+}
+
+/* Color específico para las opciones (Domicilio / En el local) */
+.Ubicacion-contenedor label {
+  color: #FFFFFF !important; 
+}
