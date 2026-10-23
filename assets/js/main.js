@@ -258,13 +258,15 @@ function enviarComandaWhatsApp() {
   mensaje += `¡Muchas gracias por elegirnos! Tu orden está siendo procesada. 🍳`;
 
   // VALIDACIÓN DE SEGURIDAD CONTRA RESIDUOS DE LLAVES
-  let whatsappDestino = datosTienda.configuracion && datosTienda.configuracion.whatsapp_destino 
+ let whatsappDestino = datosTienda.configuracion && datosTienda.configuracion.whatsapp_destino 
                         ? datosTienda.configuracion.whatsapp_destino 
                         : "573219163532";
 
-  whatsappDestino = whatsappDestino.replace(/[{}]/g, '');
+  // 2. Limpiamos cualquier signo +, espacio o llave corrupta para que no rompa la URL
+  whatsappDestino = whatsappDestino.replace(/[^0-9]/g, '');
 
-  const urlFinal = `https://wa.me{whatsappDestino}?text=${encodeURIComponent(mensaje)}`;
+  // 3. CAMBIO A API EXTENDIDA: Usamos la ruta ://whatsapp.com por máxima compatibilidad
+  const urlFinal = `https://://whatsapp.com/send?phone=${whatsappDestino}&text=${encodeURIComponent(mensaje)}`;
   
   window.open(urlFinal, '_blank');
 }
