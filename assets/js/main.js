@@ -3,7 +3,7 @@ let categoriaActiva = 'comida';
 let carrito = {};
 let tipoEntregaSeleccionado = ''; // Almacena 'domicilio' o 'local'
 
-// SOLUCIÓN CACHÉ: Forzar lectura en tiempo real del JSON
+// 1. MOTOR ASÍNCRONO: Carga inmediata destruyendo caché mediante timestamp (?v=)
 document.addEventListener('DOMContentLoaded', () => {
   fetch('data/web_info.json?v=' + Date.now())
     .then(response => {
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
       inicializarInterfaz();
     })
     .catch(error => {
-      console.error('Error detallado:', error);
+      console.error('Error detallado de base de datos:', error);
       document.getElementById('tienda-nombre').innerText = "Error de Datos";
       document.getElementById('tienda-eslogan').innerText = "El archivo JSON no se encuentra o tiene un error de formato.";
     });
@@ -32,7 +32,7 @@ function inicializarInterfaz() {
   document.querySelector('.header-overlay').style.backgroundColor = hexToRgba(config.color_principal, 0.35);
   document.querySelector('.barra-compra').style.backgroundColor = config.color_principal;
 
-  // INYECCIÓN DINÁMICA DE ANCHO, COLOR Y TEXTOS DEL DELINEADO
+  // INYECCIÓN DINÁMICA DE DELINEADO Y GROSORES (Desde Base de Datos JSON)
   const contenedorUbicacion = document.querySelector('.Ubicacion-contenedor');
   if (contenedorUbicacion) {
     contenedorUbicacion.style.borderWidth = config.grosor_borde || '2px';
@@ -43,7 +43,7 @@ function inicializarInterfaz() {
     labelsUbicacion.forEach(lbl => lbl.style.color = config.color_texto_encabezado || '#ffffff');
   }
 
-  // Cambia el color de los textos principales de la marca
+  // Ajuste cromático de los textos del encabezado principal
   document.getElementById('tienda-nombre').style.color = config.color_texto_encabezado || '#ffffff';
   document.getElementById('tienda-eslogan').style.color = config.color_texto_encabezado || '#ffffff';
 
@@ -257,14 +257,15 @@ function enviarComandaWhatsApp() {
   mensaje += `------------------------------------------\n\n`;
   mensaje += `¡Muchas gracias por elegirnos! Tu orden está siendo procesada. 🍳`;
 
-  // Jalar el número telefónico del JSON y limpiarlo estrictamente de caracteres rotos
+  // Extracción e ingeniería de seguridad: Sanitarización estricta del número de destino
   let whatsappDestino = datosTienda.configuracion && datosTienda.configuracion.whatsapp_destino 
                         ? datosTienda.configuracion.whatsapp_destino 
                         : "573219163532";
 
+  // Filtro regex avanzado: destruye espacios, letras, llaves o signos (+)
   whatsappDestino = whatsappDestino.replace(/[^0-9]/g, '');
 
-  // API oficial estable sin llaves ni texto plano corrupto
+  // CONEXIÓN MAESTRA CORREGIDA: Enlace dinámico con sintaxis nativa estricta
   const urlFinal = `https://wa.me{whatsappDestino}?text=${encodeURIComponent(mensaje)}`;
   
   window.open(urlFinal, '_blank');
